@@ -41,6 +41,7 @@
   home = {
     username = "steven";
     homeDirectory = "/home/steven";
+    packages = [];
   };
 
   # Add stuff for your user as you see fit:
