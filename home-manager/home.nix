@@ -48,6 +48,9 @@
   # programs.neovim.enable = true;
   # home.packages = with pkgs; [ steam ];
 
+  programs.neovim.enable = true;
+  programs.neovim.defaultEditor = true;
+
   # Enable home-manager and git
   programs.home-manager.enable = true;
   programs.git.enable = true;
