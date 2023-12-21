@@ -85,8 +85,6 @@
       isNormalUser = true;
       description = "steven";
       extraGroups = ["networkmanager" "wheel" "vboxsf"];
-      packages = with pkgs; [
-      ];
     };
   };
 
