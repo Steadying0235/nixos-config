@@ -71,6 +71,21 @@
   boot.loader.efi.canTouchEfiVariables = true;
 #  boot.loader.grub.enable = true;
 #  boot.loader.grub.device = "/dev/sda";
+#
+  boot.resumeDevice = "/dev/disk-by-uuid/e7bac28a-0293-4278-bb00-30ea07c01818";
+#  swapDevices = [ { device = "/dev/disk-by-uuid/e7bac28a-0293-4278-bb00-30ea07c01818"; } ];
+
+  # from https://www.worldofbs.com/nixos-framework/
+  # Suspend-then-hibernate everywhere
+  services.logind = {
+    lidSwitch = "suspend-then-hibernate";
+    extraConfig = ''
+      HandlePowerKey=suspend-then-hibernate
+      IdleAction=suspend-then-hibernate
+      IdleActionSec=2m
+    '';
+  };
+  systemd.sleep.extraConfig = "HibernateDelaySec=2h";
 
   users.users = {
     steven = {
@@ -142,6 +157,8 @@
     wget
     curl
     home-manager
+    kitty
+    tmux
   ];
 
   # Enable the OpenSSH daemon.
