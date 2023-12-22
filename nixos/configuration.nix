@@ -63,28 +63,20 @@
     auto-optimise-store = true;
   };
 
-  virtualisation.virtualbox.guest.enable = true;
-  virtualisation.virtualbox.guest.x11 = true;
-  fileSystems."/mnt/vbox_share" = {
-    fsType = "vboxsf";
-    device = "vshare";
-    options = [ "rw" "nofail" ];
-  };
-
   # network settings
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
 
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
-
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+#  boot.loader.grub.enable = true;
+#  boot.loader.grub.device = "/dev/sda";
 
   users.users = {
     steven = {
       isNormalUser = true;
       description = "steven";
-      extraGroups = ["networkmanager" "wheel" "vboxsf"];
+      extraGroups = ["networkmanager" "wheel"];
     };
   };
 
@@ -112,9 +104,10 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.displayManager.defaultSession = "plasmawayland";
+  services.xserver.desktopManager.plasma5.enable = true;
+
 
   # Configure keymap in X11
   services.xserver = {
@@ -123,12 +116,8 @@
   };
 
   # Enable automatic login for the user.
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "steven";
-
-  # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
-  systemd.services."getty@tty1".enable = false;
-  systemd.services."autovt@tty1".enable = false;
+#  services.xserver.displayManager.autoLogin.enable = true;
+#  services.xserver.displayManager.autoLogin.user = "steven";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
