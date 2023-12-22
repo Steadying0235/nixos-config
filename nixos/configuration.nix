@@ -75,6 +75,7 @@
   boot.resumeDevice = "/dev/disk-by-uuid/e7bac28a-0293-4278-bb00-30ea07c01818";
 #  swapDevices = [ { device = "/dev/disk-by-uuid/e7bac28a-0293-4278-bb00-30ea07c01818"; } ];
 
+  powerManagement.enable = true;
   # from https://www.worldofbs.com/nixos-framework/
   # Suspend-then-hibernate everywhere
   services.logind = {
