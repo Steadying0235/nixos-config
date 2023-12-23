@@ -41,7 +41,12 @@
   home = {
     username = "steven";
     homeDirectory = "/home/steven";
-    packages = [];
+    packages = [
+      pkgs.signal-desktop
+      pkgs.discord
+      pkgs.mullvad
+      pkgs.bitwarden
+    ];
   };
 
   # Add stuff for your user as you see fit:

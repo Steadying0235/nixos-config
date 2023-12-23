@@ -118,6 +118,10 @@
   # fwupd for framework laptop
   services.fwupd.enable = true;
 
+  # fix framework power draw bug
+  # from https://github.com/NixOS/nixos-hardware/tree/master/framework/13-inch/7040-amd
+  hardware.framework.amd-7040.preventWakeOnAC = true;
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
@@ -125,6 +129,8 @@
   services.xserver.displayManager.defaultSession = "plasmawayland";
   services.xserver.desktopManager.plasma5.enable = true;
 
+  # mullvad vpn
+  services.mullvad-vpn.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -138,6 +144,7 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+
 
   # Enable sound with pipewire.
   sound.enable = true;
