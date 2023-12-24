@@ -70,11 +70,10 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
-#  boot.loader.grub.enable = true;
-#  boot.loader.grub.device = "/dev/sda";
+  boot.kernelParams = ["acpi_osi=\"windows 2020\"" "mem_sleep_default=deep"];
 #
   boot.resumeDevice = "/dev/disk-by-uuid/e7bac28a-0293-4278-bb00-30ea07c01818";
-#  swapDevices = [ { device = "/dev/disk-by-uuid/e7bac28a-0293-4278-bb00-30ea07c01818"; } ];
+  swapDevices = [ { device = "/dev/disk/by-uuid/e7bac28a-0293-4278-bb00-30ea07c01818"; } ];
 
   powerManagement.enable = true;
   # from https://www.worldofbs.com/nixos-framework/
@@ -87,7 +86,10 @@
       IdleActionSec=2m
     '';
   };
-  systemd.sleep.extraConfig = "HibernateDelaySec=2h";
+  systemd.sleep.extraConfig = ''
+  HibernateDelaySec=30m
+  SuspendState=mem
+  '';
 
   users.users = {
     steven = {

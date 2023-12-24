@@ -46,6 +46,7 @@
       pkgs.discord
       pkgs.mullvad
       pkgs.bitwarden
+      pkgs.cinny-desktop
     ];
   };
 
