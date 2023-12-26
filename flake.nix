@@ -3,7 +3,7 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Home manager
     home-manager.url = "github:nix-community/home-manager/release-23.11";
@@ -32,9 +32,10 @@
         specialArgs = {inherit inputs outputs;};
         # > Our main nixos configuration file <
         modules = [
-	  ./nixos/configuration.nix
-	  nixos-hardware.nixosModules.framework-13-7040-amd
-	];
+          ./nixos/configuration.nix
+          ./suspend-then-hibernate.nix
+          nixos-hardware.nixosModules.framework-13-7040-amd
+        ];
       };
     };
 

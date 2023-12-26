@@ -16,6 +16,7 @@
 
     # You can also split up your configuration and import pieces of it here:
     # ./users.nix
+    #./suspend-then-hibernate.nix
 
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
@@ -70,7 +71,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelParams = ["acpi_osi=\"windows 2020\"" "mem_sleep_default=deep"];
+  boot.kernelParams = ["acpi_osi=\"windows 2020\"" "mem_sleep_default=deep" "resume=/dev/disk-by-uuid/e7bac28a-0293-4278-bb00-30ea07c01818"];
 #
   boot.resumeDevice = "/dev/disk-by-uuid/e7bac28a-0293-4278-bb00-30ea07c01818";
   swapDevices = [ { device = "/dev/disk/by-uuid/e7bac28a-0293-4278-bb00-30ea07c01818"; } ];
@@ -78,18 +79,18 @@
   powerManagement.enable = true;
   # from https://www.worldofbs.com/nixos-framework/
   # Suspend-then-hibernate everywhere
-  services.logind = {
-    lidSwitch = "suspend-then-hibernate";
-    extraConfig = ''
-      HandlePowerKey=suspend-then-hibernate
-      IdleAction=suspend-then-hibernate
-      IdleActionSec=2m
-    '';
-  };
-  systemd.sleep.extraConfig = ''
-  HibernateDelaySec=30m
-  SuspendState=mem
-  '';
+#  services.logind = {
+#    lidSwitch = "suspend-then-hibernate";
+#    extraConfig = ''
+#      HandlePowerKey=suspend-then-hibernate
+#      IdleAction=suspend-then-hibernate
+#      IdleActionSec=2m
+#    '';
+#  };
+#  systemd.sleep.extraConfig = ''
+#  HibernateDelaySec=30m
+#  SuspendState=mem
+#  '';
 
   users.users = {
     steven = {
@@ -170,6 +171,13 @@
     home-manager
     kitty
     tmux
+    nerdfonts
+    libgcc
+    gcc
+    wl-clipboard
+    ripgrep
+    fd
+    lazygit
   ];
 
   # Enable the OpenSSH daemon.

@@ -47,6 +47,7 @@
       pkgs.mullvad
       pkgs.bitwarden
       pkgs.cinny-desktop
+      pkgs.powertop
     ];
   };
 
@@ -54,8 +55,17 @@
   # programs.neovim.enable = true;
   # home.packages = with pkgs; [ steam ];
 
-  programs.neovim.enable = true;
-  programs.neovim.defaultEditor = true;
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+    withPython3 = true;
+    extraPython3Packages = (ps: with ps; [pynvim]); 
+    plugins = with pkgs.vimPlugins; [
+      nvim-treesitter.withAllGrammars
+    ];
+  };
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
