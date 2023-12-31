@@ -175,6 +175,7 @@
     libgcc
     gcc
     wl-clipboard
+    gnumake
     ripgrep
     fd
     lazygit

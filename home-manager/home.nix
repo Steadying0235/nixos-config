@@ -12,7 +12,7 @@
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
 
-    ./neovim.nix
+    # ./neovim.nix
   ];
 
   nixpkgs = {
@@ -58,6 +58,10 @@
   # programs.neovim.enable = true;
   # home.packages = with pkgs; [ steam ];
 
+  home.file."./.config/nvim/" = {
+    source = ./AstroNvim;
+    recursive = true;
+  };
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
