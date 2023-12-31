@@ -13,18 +13,33 @@
     vimdiffAlias = true;
     withPython3 = true;
     extraPython3Packages = (ps: with ps; [pynvim]); 
+    extraLuaConfig = ''
+      ${builtins.readFile ./nvim/options.lua} 
+      ${builtins.readFile ./nvim/mappings.lua} 
+    '';
     plugins = with pkgs.vimPlugins; [
       nvim-treesitter.withAllGrammars
       nvim-lspconfig
       plenary-nvim
       mini-nvim
       nvim-cmp
+      # luasnip
       telescope-nvim
-      lualine-nvim
-      luasnip
+      {
+        plugin = nvim-tree-lua;
+        config = toLuaFile ./nvim/plugins/nvim-tree.lua;
+      }
+      {
+        plugin = nvim-web-devicons;
+        config = toLua "require(\"nvim-web-devicons\").setup()";
+      }
+      {
+        plugin = lualine-nvim;
+        config = toLuaFile ./nvim/plugins/lualine.lua;
+      }
       {
         plugin = gitsigns-nvim;
-        config = toLuaFile ./nvim/gitsigns.lua;
+        config = toLuaFile ./nvim/plugins/gitsigns.lua;
       }
       {
         plugin = comment-nvim;
@@ -35,8 +50,5 @@
         config = "colorscheme gruvbox";
       }
     ];
-    extraLuaConfig = ''
-      ${builtins.readFile ./nvim/options.lua} 
-    '';
   };
 }
