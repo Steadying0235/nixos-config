@@ -41,13 +41,15 @@
   home = {
     username = "steven";
     homeDirectory = "/home/steven";
-    packages = [
-      pkgs.signal-desktop
-      pkgs.discord
-      pkgs.mullvad
-      pkgs.bitwarden
-      pkgs.cinny-desktop
-      pkgs.powertop
+    packages = with pkgs; [
+      signal-desktop
+      discord
+      mullvad
+      bitwarden
+      cinny-desktop
+      powertop
+      jetbrains.clion
+      jetbrains.pycharm-professional
     ];
   };
 

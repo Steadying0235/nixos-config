@@ -1,4 +1,11 @@
-  programs.neovim = {
+{config, pkgs, ... }:
+{
+  programs.neovim = 
+  let
+    toLua = str: "lua << EOF\n${str}\nEOF\n";
+    toLuaFile = file: "lua << EOF\n${builtins.readFile file}\nEOF\n";
+  in
+  {
     enable = true;
     defaultEditor = true;
     viAlias = true;
@@ -10,16 +17,26 @@
       nvim-treesitter.withAllGrammars
       nvim-lspconfig
       plenary-nvim
-      gruvbox-nvim
       mini-nvim
       nvim-cmp
       telescope-nvim
       lualine-nvim
-      gitsigns-nvim
       luasnip
-      comment-nvim
+      {
+        plugin = gitsigns-nvim;
+        config = toLuaFile ./nvim/gitsigns.lua;
+      }
+      {
+        plugin = comment-nvim;
+        config = toLua "require(\"Comment\").setup()"; 
+      }
+      {
+        plugin = gruvbox-nvim;
+        config = "colorscheme gruvbox";
+      }
     ];
     extraLuaConfig = ''
       ${builtins.readFile ./nvim/options.lua} 
     '';
   };
+}
