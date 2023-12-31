@@ -18,13 +18,16 @@
       ${builtins.readFile ./nvim/mappings.lua} 
     '';
     plugins = with pkgs.vimPlugins; [
+      # luasnip
       nvim-treesitter.withAllGrammars
       nvim-lspconfig
       plenary-nvim
       mini-nvim
       nvim-cmp
-      # luasnip
-      telescope-nvim
+      {
+        plugin = telescope-nvim;
+        config = toLua "require(\"telescope\").setup()";
+      }
       {
         plugin = nvim-tree-lua;
         config = toLuaFile ./nvim/plugins/nvim-tree.lua;

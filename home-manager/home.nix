@@ -47,6 +47,8 @@
       bitwarden
       cinny-desktop
       powertop
+      fd
+      nodejs
       jetbrains.clion
       jetbrains.pycharm-professional
     ];
