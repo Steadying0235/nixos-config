@@ -179,6 +179,7 @@
     ripgrep
     fd
     lazygit
+    powertop
   ];
 
   # Enable the OpenSSH daemon.

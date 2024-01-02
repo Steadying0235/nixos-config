@@ -47,7 +47,6 @@
       mullvad
       bitwarden
       cinny-desktop
-      powertop
       fd
       nodejs
       zotero
