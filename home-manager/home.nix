@@ -13,6 +13,7 @@
     # inputs.nix-colors.homeManagerModule
 
     # ./neovim.nix
+    ./kitty.nix
   ];
 
   nixpkgs = {
@@ -49,6 +50,8 @@
       powertop
       fd
       nodejs
+      zotero
+      cargo
       jetbrains.clion
       jetbrains.pycharm-professional
     ];
@@ -61,6 +64,10 @@
   home.file."./.config/nvim/" = {
     source = ./AstroNvim;
     recursive = true;
+  };
+
+  home.sessionVariables = {
+    TERMINAL = "kitty";
   };
 
   # Enable home-manager and git
