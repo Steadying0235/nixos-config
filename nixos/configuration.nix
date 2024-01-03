@@ -79,18 +79,18 @@
   powerManagement.enable = true;
   # from https://www.worldofbs.com/nixos-framework/
   # Suspend-then-hibernate everywhere
-#  services.logind = {
-#    lidSwitch = "suspend-then-hibernate";
-#    extraConfig = ''
-#      HandlePowerKey=suspend-then-hibernate
-#      IdleAction=suspend-then-hibernate
-#      IdleActionSec=2m
-#    '';
-#  };
-#  systemd.sleep.extraConfig = ''
-#  HibernateDelaySec=30m
-#  SuspendState=mem
-#  '';
+  services.logind = {
+    lidSwitch = "suspend-then-hibernate";
+    extraConfig = ''
+      HandlePowerKey=suspend-then-hibernate
+      IdleAction=suspend-then-hibernate
+      IdleActionSec=2m
+    '';
+  };
+  systemd.sleep.extraConfig = ''
+  HibernateDelaySec=15m
+  SuspendState=mem
+  '';
 
   users.users = {
     steven = {

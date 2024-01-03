@@ -69,6 +69,19 @@
     TERMINAL = "kitty";
   };
 
+
+  programs.ssh = {
+    enable = true;
+    extraConfig = 
+    ''
+    Host deck
+      HostName 192.168.1.152
+      User deck
+      Port 22
+      IdentityFile ~/.ssh/id_ed25519
+    '';
+  };
+
   # Enable home-manager and git
   programs.home-manager.enable = true;
   programs.git = {
