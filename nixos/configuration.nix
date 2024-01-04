@@ -71,15 +71,15 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelParams = ["acpi_osi=\"windows 2020\"" "mem_sleep_default=deep" "resume=/dev/disk-by-uuid/e7bac28a-0293-4278-bb00-30ea07c01818"];
+  boot.kernelParams = ["acpi_osi=\"windows 2020\"" "mem_sleep_default=deep" "resume=LABEL=swap"];
 #
-  boot.resumeDevice = "/dev/disk-by-uuid/e7bac28a-0293-4278-bb00-30ea07c01818";
-  swapDevices = [ { device = "/dev/disk/by-uuid/e7bac28a-0293-4278-bb00-30ea07c01818"; } ];
+  swapDevices = [ { label = "swap"; } ];
 
   powerManagement = {
     enable = true;
     powertop.enable = true;
   };
+
   # from https://www.worldofbs.com/nixos-framework/
   # Suspend-then-hibernate everywhere
   services.logind = {
@@ -92,10 +92,8 @@
     '';
   };
   systemd.sleep.extraConfig = ''
-  AllowSuspendThenHibernate=yes
-  HibernateMode=platform
-  HibernateDelaySec=45m
-  SuspendState=mem
+    HibernateDelaySec=30s 
+    SuspendState=mem
   '';
 
   users.users = {
