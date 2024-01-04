@@ -76,19 +76,25 @@
   boot.resumeDevice = "/dev/disk-by-uuid/e7bac28a-0293-4278-bb00-30ea07c01818";
   swapDevices = [ { device = "/dev/disk/by-uuid/e7bac28a-0293-4278-bb00-30ea07c01818"; } ];
 
-  powerManagement.enable = true;
+  powerManagement = {
+    enable = true;
+    powertop.enable = true;
+  };
   # from https://www.worldofbs.com/nixos-framework/
   # Suspend-then-hibernate everywhere
   services.logind = {
     lidSwitch = "suspend-then-hibernate";
+    powerKey = "suspend-then-hibernate";
+    powerKeyLongPress = "poweroff";
     extraConfig = ''
-      HandlePowerKey=suspend-then-hibernate
       IdleAction=suspend-then-hibernate
       IdleActionSec=2m
     '';
   };
   systemd.sleep.extraConfig = ''
-  HibernateDelaySec=15m
+  AllowSuspendThenHibernate=yes
+  HibernateMode=platform
+  HibernateDelaySec=45m
   SuspendState=mem
   '';
 

@@ -35,8 +35,8 @@
         modules = [
           ./nixos/configuration.nix
           nixos-hardware.nixosModules.framework-13-7040-amd
-          ./suspend-then-hibernate.nix
-          ./powertop.nix
+          # ./suspend-then-hibernate.nix
+          # ./powertop.nix
         ];
       };
     };
