@@ -132,9 +132,43 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
+  #hyprland
+  # Enabling hyprlnd on NixOS
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+
+  environment.sessionVariables = {
+    # If your cursor becomes invisible
+    WLR_NO_HARDWARE_CURSORS = "1";
+    # Hint electron apps to use wayland
+    NIXOS_OZONE_WL = "1";
+  };
+
+  hardware = {
+      # Opengl
+      opengl.enable = true;
+  };
+
+  # waybar
+  # (pkgs.waybar.overrideAttrs (oldAttrs: {
+  #     mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+  #   })
+  # )
+  #
+  # # XDG portal
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  
+  # gnome
+  # services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.desktopManager.gnome.enable = true;
+
+  # kde
   services.xserver.displayManager.sddm.enable = true;
-  services.xserver.displayManager.defaultSession = "plasmawayland";
-  services.xserver.desktopManager.plasma5.enable = true;
+  # services.xserver.displayManager.defaultSession = "plasmawayland";
+  # services.xserver.desktopManager.plasma5.enable = true;
 
   # mullvad vpn
   services.mullvad-vpn.enable = true;
@@ -151,6 +185,15 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+
+  # enable fingerprint reader
+  # services.fprintd.enable = true;
+  # services.fprintd.tod.enable = true;
+  # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
+
+  security.pam.services.swaylock = {};
+  security.pam.services.swaylock-effects = {};
+
 
 
   # Enable sound with pipewire.
@@ -184,6 +227,27 @@
     fd
     lazygit
     powertop
+    mako
+    libnotify
+    font-awesome
+    swww
+    rofi-wayland
+    teams-for-linux
+    networkmanagerapplet
+    flameshot
+    (waybar.overrideAttrs (oldAttrs: {
+      mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
+      })
+    )
+    lf
+    glib
+    xcur2png
+    go
+    gtk3
+    cairo
+    nwg-look
+    swayidle
+    swaylock-effects
   ];
 
   # Enable the OpenSSH daemon.
