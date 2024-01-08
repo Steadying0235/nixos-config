@@ -1,9 +1,8 @@
 { config, ... }:
-
 {
   programs.kitty = {
     enable = true;
-    font.name = "Hack Nerd Font Mono";
+    font.name = "JetBrainsMono Nerd Font";
     theme = "Gruvbox Material Dark Hard";
   };
 

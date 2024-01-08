@@ -92,7 +92,7 @@
     '';
   };
   systemd.sleep.extraConfig = ''
-    HibernateDelaySec=30s 
+    HibernateDelaySec=1h 
     SuspendState=mem
   '';
 
@@ -100,7 +100,7 @@
     steven = {
       isNormalUser = true;
       description = "steven";
-      extraGroups = ["networkmanager" "wheel"];
+      extraGroups = ["networkmanager" "wheel" "input"];
     };
   };
 
@@ -128,6 +128,10 @@
   # fix framework power draw bug
   # from https://github.com/NixOS/nixos-hardware/tree/master/framework/13-inch/7040-amd
   hardware.framework.amd-7040.preventWakeOnAC = true;
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -218,7 +222,6 @@
     home-manager
     kitty
     tmux
-    nerdfonts
     libgcc
     gcc
     wl-clipboard
@@ -229,12 +232,13 @@
     powertop
     mako
     libnotify
-    font-awesome
     swww
+    wlogout
     rofi-wayland
-    teams-for-linux
+    rofi-bluetooth
     networkmanagerapplet
     flameshot
+    mpd
     (waybar.overrideAttrs (oldAttrs: {
       mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
       })
@@ -248,6 +252,14 @@
     nwg-look
     swayidle
     swaylock-effects
+    pavucontrol
+    libsForQt5.dolphin
+    xdg-desktop-portal-hyprland
+  ];
+
+  fonts.packages = with pkgs; [
+    font-awesome
+    nerdfonts
   ];
 
   # Enable the OpenSSH daemon.

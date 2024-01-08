@@ -51,6 +51,7 @@
       nodejs
       zotero
       cargo
+      pywal
       jetbrains.clion
       jetbrains.pycharm-professional
     ];
