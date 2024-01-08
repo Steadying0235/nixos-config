@@ -155,15 +155,20 @@
       opengl.enable = true;
   };
 
-  # waybar
-  # (pkgs.waybar.overrideAttrs (oldAttrs: {
-  #     mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-  #   })
-  # )
-  #
   # # XDG portal
-  xdg.portal.enable = true;
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  # xdg-desktop-portal works by exposing a series of D-Bus interfaces
+  # known as portals under a well-known name
+  # (org.freedesktop.portal.Desktop) and object path
+  # (/org/freedesktop/portal/desktop).
+  # The portal interfaces include APIs for file access, opening URIs,
+  # printing and others.
+  services.dbus.enable = true;
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+  };
+
   
   # gnome
   # services.xserver.displayManager.gdm.enable = true;
@@ -197,6 +202,7 @@
 
   security.pam.services.swaylock = {};
   security.pam.services.swaylock-effects = {};
+  security.polkit.enable = true;
 
 
 
@@ -237,7 +243,6 @@
     rofi-wayland
     rofi-bluetooth
     networkmanagerapplet
-    flameshot
     mpd
     (waybar.overrideAttrs (oldAttrs: {
       mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
@@ -253,8 +258,12 @@
     swayidle
     swaylock-effects
     pavucontrol
-    libsForQt5.dolphin
-    xdg-desktop-portal-hyprland
+    slurp
+    grim
+    xfce.thunar
+    libsForQt5.polkit-kde-agent
+    brightnessctl
+    xwaylandvideobridge
   ];
 
   fonts.packages = with pkgs; [

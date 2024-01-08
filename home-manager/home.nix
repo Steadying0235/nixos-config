@@ -14,6 +14,7 @@
 
     # ./neovim.nix
     ./kitty.nix
+    ./wlogout.nix
   ];
 
   nixpkgs = {
@@ -52,6 +53,10 @@
       zotero
       cargo
       pywal
+      gimp
+      obs-studio
+      obs-studio-plugins.wlrobs
+      obs-studio-plugins.obs-vaapi
       jetbrains.clion
       jetbrains.pycharm-professional
     ];
@@ -90,6 +95,16 @@
     userEmail = "github@arrownoon.maskmy.id";
     userName = "steven";
   };
+
+  # home.pointerCursor = {
+  #   name = "Adwaita";
+  #   package = pkgs.gnome.adwaita-icon-theme;
+  #   size = 24;
+  #   x11 = {
+  #     enable = true;
+  #     defaultCursor = "Adwaita";
+  #   };
+  # };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
