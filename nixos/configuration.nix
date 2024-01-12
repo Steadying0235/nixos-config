@@ -265,6 +265,7 @@
     brightnessctl
     xwaylandvideobridge
     xorg.libxcb
+    qt6.qtwayland
   ];
 
   fonts.packages = with pkgs; [
