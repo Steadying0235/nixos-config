@@ -54,6 +54,7 @@
       cargo
       pywal
       gimp
+      zoom-us
       obs-studio
       obs-studio-plugins.wlrobs
       obs-studio-plugins.obs-vaapi
