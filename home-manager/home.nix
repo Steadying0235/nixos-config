@@ -60,6 +60,7 @@
       obs-studio-plugins.obs-vaapi
       jetbrains.clion
       jetbrains.pycharm-professional
+      platformio-core
     ];
   };
 

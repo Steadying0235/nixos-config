@@ -264,8 +264,9 @@
     libsForQt5.polkit-kde-agent
     brightnessctl
     xwaylandvideobridge
-    xorg.libxcb
+    xorg.libxcb.dev
     qt6.qtwayland
+    python3
   ];
 
   fonts.packages = with pkgs; [
