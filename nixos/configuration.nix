@@ -71,7 +71,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelParams = ["acpi_osi=\"windows 2020\"" "mem_sleep_default=deep" "resume=LABEL=swap"];
+  boot.kernelParams = ["acpi.no_ec_wakeup=1" "acpi_osi=\"windows 2020\"" "mem_sleep_default=deep" "resume=LABEL=swap"];
 #
   swapDevices = [ { label = "swap"; } ];
 
@@ -130,7 +130,7 @@
   hardware.framework.amd-7040.preventWakeOnAC = true;
   hardware.bluetooth = {
     enable = true;
-    powerOnBoot = true;
+    powerOnBoot = false;
   };
 
   # Enable the X11 windowing system.
