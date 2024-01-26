@@ -147,7 +147,7 @@
     # If your cursor becomes invisible
     WLR_NO_HARDWARE_CURSORS = "1";
     # Hint electron apps to use wayland
-    NIXOS_OZONE_WL = "1";
+    # NIXOS_OZONE_WL = "1";
   };
 
   hardware = {
@@ -266,6 +266,7 @@
     xwaylandvideobridge
     xorg.libxcb.dev
     qt6.qtwayland
+    gnome.gnome-keyring
     python3
   ];
 
