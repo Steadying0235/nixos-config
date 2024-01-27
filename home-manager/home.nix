@@ -52,6 +52,7 @@
       nodejs
       zotero
       cargo
+      rustfmt
       pywal
       gimp
       zoom-us
