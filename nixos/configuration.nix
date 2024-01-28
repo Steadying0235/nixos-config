@@ -112,7 +112,7 @@ in
     steven = {
       isNormalUser = true;
       description = "steven";
-      extraGroups = ["networkmanager" "wheel" "input"];
+      extraGroups = ["dialout" "networkmanager" "wheel" "input"];
     };
   };
 
