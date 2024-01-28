@@ -7,6 +7,18 @@
   pkgs,
   ...
 }: 
+let
+  pioRules = pkgs.stdenv.mkDerivation {
+    name = "platformio-udev-rules";
+    src = ./rules/.;
+    dontBuild = true;
+    dontConfigure = true;
+    installPhase = ''
+      mkdir -p $out/lib/udev/rules.d
+      cp 99-platformio-udev.rules $out/lib/udev/rules.d
+    '';
+  };
+in
 {
   # You can import other NixOS modules here
   imports = [
@@ -268,11 +280,18 @@
     qt6.qtwayland
     gnome.gnome-keyring
     python3
+    cmake
   ];
 
   fonts.packages = with pkgs; [
     font-awesome
     nerdfonts
+  ];
+
+  services.udev.packages = [
+    pkgs.platformio-core
+    pkgs.openocd
+    pioRules
   ];
 
   # Enable the OpenSSH daemon.
