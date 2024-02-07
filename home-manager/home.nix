@@ -1,11 +1,10 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-{
-  inputs,
-  lib,
-  config,
-  pkgs,
-  ...
+{ inputs
+, lib
+, config
+, pkgs
+, ...
 }: {
   # You can import other home-manager modules here
   imports = [
@@ -61,6 +60,7 @@
       obs-studio-plugins.obs-vaapi
       jetbrains.clion
       jetbrains.pycharm-professional
+      nixpkgs-fmt
     ];
   };
 
@@ -78,24 +78,27 @@
   };
 
   programs.vscode = {
-  enable = true;
-  extensions = with pkgs.vscode-extensions; [
-    dracula-theme.theme-dracula
-    vscodevim.vim
-    yzhang.markdown-all-in-one
+    enable = true;
+    package = pkgs.vscode.fhsWithPackages (ps: with ps; [
+      docker
+    ]);
+    extensions = with pkgs.vscode-extensions; [
+      dracula-theme.theme-dracula
+      vscodevim.vim
+      yzhang.markdown-all-in-one
     ];
   };
 
   programs.ssh = {
     enable = true;
-    extraConfig = 
-    ''
-    Host deck
-      HostName 192.168.1.152
-      User deck
-      Port 22
-      IdentityFile ~/.ssh/id_ed25519
-    '';
+    extraConfig =
+      ''
+        Host deck
+          HostName 192.168.1.152
+          User deck
+          Port 22
+          IdentityFile ~/.ssh/id_ed25519
+      '';
   };
 
   # Enable home-manager and git

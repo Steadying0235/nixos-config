@@ -1,12 +1,11 @@
 # This is your system's configuration file.
 # Use this to configure your system environment (it replaces /etc/nixos/configuration.nix)
-{
-  inputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}: 
+{ inputs
+, lib
+, config
+, pkgs
+, ...
+}:
 let
   pioRules = pkgs.stdenv.mkDerivation {
     name = "platformio-udev-rules";
@@ -56,18 +55,18 @@ in
 
   # This will add each flake input as a registry
   # To make nix3 commands consistent with your flake
-  nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
+  nix.registry = (lib.mapAttrs (_: flake: { inherit flake; })) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
 
   # This will additionally add your inputs to the system's legacy channels
   # Making legacy nix commands consistent as well, awesome!
-  nix.nixPath = ["/etc/nix/path"];
+  nix.nixPath = [ "/etc/nix/path" ];
   environment.etc =
     lib.mapAttrs'
-    (name: value: {
-      name = "nix/path/${name}";
-      value.source = value.flake;
-    })
-    config.nix.registry;
+      (name: value: {
+        name = "nix/path/${name}";
+        value.source = value.flake;
+      })
+      config.nix.registry;
 
   nix.settings = {
     # Enable flakes and new 'nix' command
@@ -83,9 +82,9 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelParams = ["acpi.no_ec_wakeup=1" "acpi_osi=\"windows 2020\"" "mem_sleep_default=deep" "resume=LABEL=swap"];
-#
-  swapDevices = [ { label = "swap"; } ];
+  boot.kernelParams = [ "acpi.no_ec_wakeup=1" "acpi_osi=\"windows 2020\"" "mem_sleep_default=deep" "resume=LABEL=swap" ];
+  #
+  swapDevices = [{ label = "swap"; }];
 
   powerManagement = {
     enable = true;
@@ -112,7 +111,7 @@ in
     steven = {
       isNormalUser = true;
       description = "steven";
-      extraGroups = ["dialout" "networkmanager" "wheel" "input"];
+      extraGroups = [ "libvirtd" "docker" "dialout" "networkmanager" "wheel" "input" ];
     };
   };
 
@@ -148,12 +147,29 @@ in
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
+  programs.dconf.enable = true;
   #hyprland
   # Enabling hyprlnd on NixOS
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
   };
+
+  programs.nix-ld.enable = true;
+
+  virtualisation = {
+    libvirtd = {
+      enable = true;
+      qemu = {
+        swtpm.enable = true;
+        ovmf.enable = true;
+        ovmf.packages = [ pkgs.OVMFFull.fd ];
+      };
+    };
+    spiceUSBRedirection.enable = true;
+    docker.enable = true;
+  };
+  services.spice-vdagentd.enable = true;
 
   environment.sessionVariables = {
     # If your cursor becomes invisible
@@ -163,8 +179,8 @@ in
   };
 
   hardware = {
-      # Opengl
-      opengl.enable = true;
+    # Opengl
+    opengl.enable = true;
   };
 
   # # XDG portal
@@ -181,7 +197,7 @@ in
     extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
   };
 
-  
+
   # gnome
   # services.xserver.displayManager.gdm.enable = true;
   # services.xserver.desktopManager.gnome.enable = true;
@@ -201,8 +217,8 @@ in
   };
 
   # Enable automatic login for the user.
-#  services.xserver.displayManager.autoLogin.enable = true;
-#  services.xserver.displayManager.autoLogin.user = "steven";
+  #  services.xserver.displayManager.autoLogin.enable = true;
+  #  services.xserver.displayManager.autoLogin.user = "steven";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -212,8 +228,8 @@ in
   # services.fprintd.tod.enable = true;
   # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
 
-  security.pam.services.swaylock = {};
-  security.pam.services.swaylock-effects = {};
+  security.pam.services.swaylock = { };
+  security.pam.services.swaylock-effects = { };
   security.polkit.enable = true;
 
 
@@ -227,7 +243,7 @@ in
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-   };
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -257,8 +273,8 @@ in
     networkmanagerapplet
     mpd
     (waybar.overrideAttrs (oldAttrs: {
-      mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
-      })
+      mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+    })
     )
     lf
     glib
@@ -281,6 +297,11 @@ in
     gnome.gnome-keyring
     python3
     cmake
+    virt-manager
+    virt-viewer
+    spice
+    spice-gtk
+    spice-protocol
   ];
 
   fonts.packages = with pkgs; [
@@ -299,16 +320,16 @@ in
 
   # This setups a SSH server. Very important if you're setting up a headless system.
   # Feel free to remove if you don't need it.
-#  services.openssh = {
-#    enable = true;
-#    settings = {
-#      # Forbid root login through SSH.
-#      PermitRootLogin = "no";
-#      # Use keys only. Remove if you want to SSH using password (not recommended)
-#      PasswordAuthentication = false;
-#    };
-#  };
-#
+  #  services.openssh = {
+  #    enable = true;
+  #    settings = {
+  #      # Forbid root login through SSH.
+  #      PermitRootLogin = "no";
+  #      # Use keys only. Remove if you want to SSH using password (not recommended)
+  #      PasswordAuthentication = false;
+  #    };
+  #  };
+  #
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
