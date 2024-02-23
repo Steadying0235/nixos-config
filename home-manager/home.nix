@@ -61,6 +61,7 @@
       jetbrains.clion
       jetbrains.pycharm-professional
       nixpkgs-fmt
+      zathura
     ];
   };
 
@@ -91,14 +92,33 @@
 
   programs.ssh = {
     enable = true;
-    extraConfig =
-      ''
-        Host deck
-          HostName 192.168.1.152
-          User deck
-          Port 22
-          IdentityFile ~/.ssh/id_ed25519
-      '';
+    matchBlocks = {
+      "deck" = {
+        port = 22;
+        hostname = "192.168.1.152";
+        user = "deck";
+      };
+      "ubuntu-dev" = {
+        port = 22;
+        hostname = "192.168.122.99";
+        user = "steven";
+      };
+    };
+  };
+
+ programs = {
+  direnv = {
+    enable = true;
+    enableBashIntegration = true; # see note on other shells below
+    nix-direnv.enable = true;
+  };
+
+  bash.enable = true; # see note on other shells below
+};
+
+  home.file.".ssh/config" = {
+  target = ".ssh/config_source";
+  onChange = ''cat ~/.ssh/config_source > ~/.ssh/config && chmod 600 ~/.ssh/config'';
   };
 
   # Enable home-manager and git
@@ -109,15 +129,16 @@
     userName = "steven";
   };
 
-  # home.pointerCursor = {
-  #   name = "Adwaita";
-  #   package = pkgs.gnome.adwaita-icon-theme;
-  #   size = 24;
-  #   x11 = {
-  #     enable = true;
-  #     defaultCursor = "Adwaita";
-  #   };
-  # };
+  home.pointerCursor = {
+    gtk.enable = true;
+    name = "Adwaita";
+    package = pkgs.gnome.adwaita-icon-theme;
+    size = 24;
+    x11 = {
+      enable = true;
+      defaultCursor = "Adwaita";
+    };
+  };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

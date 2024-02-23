@@ -297,12 +297,13 @@ in
     gnome.gnome-keyring
     python3
     cmake
-    virt-manager
     virt-viewer
     spice
     spice-gtk
     spice-protocol
   ];
+
+  programs.virt-manager.enable = true;
 
   fonts.packages = with pkgs; [
     font-awesome
