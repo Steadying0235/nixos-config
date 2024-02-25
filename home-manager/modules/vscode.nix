@@ -10,7 +10,7 @@
       dracula-theme.theme-dracula
       vscodevim.vim
       yzhang.markdown-all-in-one
-      vscode-markdownlint
+      davidanson.vscode-markdownlint
       rust-lang.rust-analyzer
       tomoki1207.pdf
       ms-vscode-remote.remote-ssh
@@ -25,15 +25,15 @@
       esbenp.prettier-vscode
       jnoortheen.nix-ide
       ms-toolsai.jupyter
-      ms-toolsai.jupyter-slideshow
-      ms-toolsai.jupyter-cell-tags
+      ms-toolsai.vscode-jupyter-slideshow
+      ms-toolsai.vscode-jupyter-cell-tags
       ms-toolsai.jupyter-renderers
       ms-toolsai.jupyter-keymap
       donjayamanne.githistory
       mhutchie.git-graph
       ms-azuretools.vscode-docker
       twxs.cmake
-      ms-vscode.cmaket-tools
+      ms-vscode.cmake-tools
       ms-vscode.cpptools
     ];
   };
