@@ -27,7 +27,6 @@ in
 
     # You can also split up your configuration and import pieces of it here:
     # ./users.nix
-    #./suspend-then-hibernate.nix
 
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
@@ -36,19 +35,8 @@ in
   nixpkgs = {
     # You can add overlays here
     overlays = [
-      # If you want to use overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
     ];
-    # Configure your nixpkgs instance
     config = {
-      # Disable if you don't want unfree packages
       allowUnfree = true;
     };
   };
@@ -148,12 +136,13 @@ in
   services.xserver.enable = true;
 
   programs.dconf.enable = true;
+
   #hyprland
   # Enabling hyprlnd on NixOS
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
+  # programs.hyprland = {
+  #   enable = true;
+  #   xwayland.enable = true;
+  # };
 
   programs.nix-ld.enable = true;
 
@@ -204,11 +193,11 @@ in
 
   # kde
   services.xserver.displayManager.sddm.enable = true;
-  # services.xserver.displayManager.defaultSession = "plasmawayland";
-  # services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.displayManager.defaultSession = "plasmawayland";
+  services.xserver.desktopManager.plasma5.enable = true;
 
   # mullvad vpn
-  services.mullvad-vpn.enable = true;
+  # services.mullvad-vpn.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -217,21 +206,18 @@ in
   };
 
   # Enable automatic login for the user.
-  #  services.xserver.displayManager.autoLogin.enable = true;
+  #  services.xserver.displayManager.autoLogin.enable = true>;
   #  services.xserver.displayManager.autoLogin.user = "steven";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
   # enable fingerprint reader
-  # services.fprintd.enable = true;
-  # services.fprintd.tod.enable = true;
-  # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
+  services.fprintd.enable = true;
+  services.fprintd.tod.enable = true;
+  services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
 
-  security.pam.services.swaylock = { };
-  security.pam.services.swaylock-effects = { };
   security.polkit.enable = true;
-
 
 
   # Enable sound with pipewire.
@@ -248,56 +234,11 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    neovim
-    brave
-    git
-    wget
-    curl
     home-manager
-    kitty
-    tmux
-    libgcc
-    gcc
-    wl-clipboard
     gnumake
-    ripgrep
-    fd
-    lazygit
-    powertop
-    mako
-    libnotify
-    swww
-    wlogout
-    rofi-wayland
-    rofi-bluetooth
-    networkmanagerapplet
-    mpd
-    (waybar.overrideAttrs (oldAttrs: {
-      mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-    })
-    )
-    lf
-    glib
-    xcur2png
-    go
-    gtk3
-    cairo
-    nwg-look
-    swayidle
-    swaylock-effects
-    pavucontrol
-    slurp
-    grim
-    xfce.thunar
-    libsForQt5.polkit-kde-agent
-    brightnessctl
-    xwaylandvideobridge
-    xorg.libxcb.dev
-    qt6.qtwayland
-    gnome.gnome-keyring
-    python3
+    gcc
+    libgcc
     cmake
-    virt-viewer
     spice
     spice-gtk
     spice-protocol
@@ -316,26 +257,6 @@ in
     pioRules
   ];
 
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # This setups a SSH server. Very important if you're setting up a headless system.
-  # Feel free to remove if you don't need it.
-  #  services.openssh = {
-  #    enable = true;
-  #    settings = {
-  #      # Forbid root login through SSH.
-  #      PermitRootLogin = "no";
-  #      # Use keys only. Remove if you want to SSH using password (not recommended)
-  #      PasswordAuthentication = false;
-  #    };
-  #  };
-  #
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.11";
