@@ -65,7 +65,7 @@
   };
 
   home.file."./.config/nvim/" = {
-    source = ./AstroNvim;
+    source = ./modules/AstroNvim;
     recursive = true;
   };
 

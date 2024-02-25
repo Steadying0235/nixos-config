@@ -19,16 +19,7 @@ let
   };
 in
 {
-  # You can import other NixOS modules here
   imports = [
-    # If you want to use modules from other flakes (such as nixos-hardware):
-    # inputs.hardware.nixosModules.common-cpu-amd
-    # inputs.hardware.nixosModules.common-ssd
-
-    # You can also split up your configuration and import pieces of it here:
-    # ./users.nix
-
-    # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
   ];
 
@@ -127,6 +118,7 @@ in
   # fix framework power draw bug
   # from https://github.com/NixOS/nixos-hardware/tree/master/framework/13-inch/7040-amd
   hardware.framework.amd-7040.preventWakeOnAC = true;
+
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = false;
@@ -136,13 +128,6 @@ in
   services.xserver.enable = true;
 
   programs.dconf.enable = true;
-
-  #hyprland
-  # Enabling hyprlnd on NixOS
-  # programs.hyprland = {
-  #   enable = true;
-  #   xwayland.enable = true;
-  # };
 
   programs.nix-ld.enable = true;
 
@@ -161,14 +146,10 @@ in
   services.spice-vdagentd.enable = true;
 
   environment.sessionVariables = {
-    # If your cursor becomes invisible
     WLR_NO_HARDWARE_CURSORS = "1";
-    # Hint electron apps to use wayland
-    # NIXOS_OZONE_WL = "1";
   };
 
   hardware = {
-    # Opengl
     opengl.enable = true;
   };
 
@@ -186,28 +167,20 @@ in
     extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
   };
 
-
-  # gnome
-  # services.xserver.displayManager.gdm.enable = true;
-  # services.xserver.desktopManager.gnome.enable = true;
-
   # kde
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.displayManager.defaultSession = "plasmawayland";
   services.xserver.desktopManager.plasma5.enable = true;
 
-  # mullvad vpn
-  # services.mullvad-vpn.enable = true;
-
   # Configure keymap in X11
-  services.xserver = {
+  services.xserver.xkb = {
     layout = "us";
-    xkbVariant = "";
+    variant = "";
   };
 
   # Enable automatic login for the user.
-  #  services.xserver.displayManager.autoLogin.enable = true>;
-  #  services.xserver.displayManager.autoLogin.user = "steven";
+  services.xserver.displayManager.autoLogin.enable = true;
+  services.xserver.displayManager.autoLogin.user = "steven";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -232,7 +205,7 @@ in
   };
 
   # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # nix search <package name>
   environment.systemPackages = with pkgs; [
     home-manager
     gnumake
@@ -256,6 +229,9 @@ in
     pkgs.openocd
     pioRules
   ];
+
+  programs.zsh.enable = true;
+  users.users.steven.shell = pkgs.zsh;
 
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
