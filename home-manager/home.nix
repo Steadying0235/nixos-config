@@ -61,6 +61,7 @@
       curl
       wget
       protonvpn-cli
+      libreoffice-qt
     ];
   };
 

@@ -21,6 +21,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
+    ./modules/wifi-resume.nix
   ];
 
   nixpkgs = {
@@ -57,6 +58,7 @@ in
   # network settings
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
+  networking.firewall.checkReversePath = false;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -171,6 +173,7 @@ in
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.displayManager.defaultSession = "plasmawayland";
   services.xserver.desktopManager.plasma5.enable = true;
+  security.pam.services.sddm.enableKwallet = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -178,9 +181,10 @@ in
     variant = "";
   };
 
+
   # Enable automatic login for the user.
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "steven";
+  # services.xserver.displayManager.autoLogin.enable = true;
+  # services.xserver.displayManager.autoLogin.user = "steven";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -191,6 +195,7 @@ in
   services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
 
   security.polkit.enable = true;
+
 
 
   # Enable sound with pipewire.
