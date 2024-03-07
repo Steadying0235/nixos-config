@@ -4,18 +4,24 @@
     enable = true;
     package = pkgs.vscode.fhsWithPackages (ps: with ps; [
       docker
+      rustup 
+      zlib 
+      openssl.dev 
+      pkg-config
       conda
+      brave
     ]);
     extensions = with pkgs.vscode-extensions; [
       dracula-theme.theme-dracula
+      ms-azuretools.vscode-docker
       vscodevim.vim
-      yzhang.markdown-all-in-one
-      davidanson.vscode-markdownlint
+      james-yu.latex-workshop
+      shd101wyy.markdown-preview-enhanced
       rust-lang.rust-analyzer
-      tomoki1207.pdf
       ms-vscode-remote.remote-ssh
       ms-vscode-remote.remote-containers
       zhuangtongfa.material-theme
+      pkief.material-icon-theme
       mechatroner.rainbow-csv
       oderwat.indent-rainbow
       ms-python.vscode-pylance
@@ -23,7 +29,6 @@
       ms-python.black-formatter
       prisma.prisma
       esbenp.prettier-vscode
-      jnoortheen.nix-ide
       ms-toolsai.jupyter
       ms-toolsai.vscode-jupyter-slideshow
       ms-toolsai.vscode-jupyter-cell-tags
@@ -31,12 +36,9 @@
       ms-toolsai.jupyter-keymap
       donjayamanne.githistory
       mhutchie.git-graph
-      ms-azuretools.vscode-docker
       twxs.cmake
       ms-vscode.cmake-tools
       ms-vscode.cpptools
     ];
   };
-
-
 }

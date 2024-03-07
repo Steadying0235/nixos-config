@@ -92,7 +92,7 @@ in
     steven = {
       isNormalUser = true;
       description = "steven";
-      extraGroups = [ "libvirtd" "docker" "dialout" "networkmanager" "wheel" "input" ];
+      extraGroups = [ "plugdev" "libvirtd" "docker" "dialout" "networkmanager" "wheel" "input" ];
     };
   };
 
@@ -119,7 +119,7 @@ in
 
   # fix framework power draw bug
   # from https://github.com/NixOS/nixos-hardware/tree/master/framework/13-inch/7040-amd
-  hardware.framework.amd-7040.preventWakeOnAC = true;
+  # hardware.framework.amd-7040.preventWakeOnAC = true; # upstreamed in kernel 6.7
 
   hardware.bluetooth = {
     enable = true;
@@ -170,10 +170,16 @@ in
   };
 
   # kde
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.displayManager.defaultSession = "plasmawayland";
-  services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.displayManager.sddm.wayland.enable = true;
+  services.xserver.displayManager.defaultSession = "plasma";
+  services.xserver.desktopManager.plasma6.enable = true;
   security.pam.services.sddm.enableKwallet = true;
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [
+  plasma-browser-integration
+  konsole
+  oxygen
+];
+
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -220,6 +226,7 @@ in
     spice
     spice-gtk
     spice-protocol
+    dnsmasq
   ];
 
   programs.virt-manager.enable = true;

@@ -4,11 +4,11 @@
   # Define the custom systemd service
   systemd.services.wifi-resume = {
     description = "Restart Wi-Fi after hibernation";
-    after = [ "hibernate.target" "suspend.target" "hybrid-sleep.target" ];
-    wantedBy = [ "hibernate.target" "suspend.target" "hybrid-sleep.target" ];
+    after = [ "hibernate.target" ];
+    wantedBy = [ "hibernate.target" ];
     script = ''
-      ${pkgs.kmod}/bin/modprobe -r iwlwifi
-      ${pkgs.kmod}/bin/modprobe iwlwifi
+      ${pkgs.kmod}/bin/modprobe -r mt7921e
+      ${pkgs.kmod}/bin/modprobe mt7921e
     '';
   };
 }

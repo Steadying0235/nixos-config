@@ -62,6 +62,7 @@
       wget
       protonvpn-cli
       libreoffice-qt
+      texliveMedium
     ];
   };
 
