@@ -21,7 +21,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    ./modules/wifi-resume.nix
+    # ./modules/wifi-resume.nix
   ];
 
   nixpkgs = {
