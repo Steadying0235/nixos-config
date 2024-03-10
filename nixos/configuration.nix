@@ -62,7 +62,7 @@ in
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_6_6;
   boot.kernelParams = [ "acpi.no_ec_wakeup=1" "acpi_osi=\"windows 2020\"" "mem_sleep_default=deep" "resume=LABEL=swap" ];
   #
   swapDevices = [{ label = "swap"; }];
@@ -227,6 +227,7 @@ in
     spice-gtk
     spice-protocol
     dnsmasq
+    wireguard-tools
   ];
 
   programs.virt-manager.enable = true;
