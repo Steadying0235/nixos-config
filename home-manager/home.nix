@@ -36,7 +36,7 @@
       signal-desktop
       discord
       bitwarden
-      cinny-desktop
+      element-desktop
       fd
       powertop
       nodejs
